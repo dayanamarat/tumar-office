@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>Маркетинг Tumar 2026–2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tumar">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Prata&display=swap">
+<style>
+/* Layout: sticky tab bar, one column of sections; cards only for checklists. Palette: steppe ink + deep juniper + muted gold. */
+:root{
+  --bg:#F4F5F2; --surface:#FFFFFF; --ink:#16232A; --muted:#5C6A70; --line:#DDE2DE;
+  --accent:#1E5A55; --accent-soft:#E2EEEB; --gold:#9C7A32; --gold-soft:#F3ECDC;
+  --ok:#2E7D4F; --ok-soft:#E3F1E7;
+  --f-display:"Prata", Georgia, "Times New Roman", serif;
+  --f-body:"Onest", -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F171B; --surface:#172228; --ink:#E7ECEA; --muted:#97A5AA; --line:#2A383F;
+  --accent:#6FB8AE; --accent-soft:#1D3533; --gold:#D3B26A; --gold-soft:#332B1A;
+  --ok:#6CC08E; --ok-soft:#1B3325; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F171B; --surface:#172228; --ink:#E7ECEA; --muted:#97A5AA; --line:#2A383F;
+  --accent:#6FB8AE; --accent-soft:#1D3533; --gold:#D3B26A; --gold-soft:#332B1A;
+  --ok:#6CC08E; --ok-soft:#1B3325; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+header.top{padding-block:28px 12px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(28px,5vw,40px);line-height:1.15;margin:6px 0 8px;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:400;font-size:24px;margin:0 0 4px;text-wrap:balance}
+h3{font-size:16px;font-weight:600;margin:0}
+p{margin:0}
+.lead{color:var(--muted);max-width:62ch}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-bottom:24px}
+nav.tabs .inner{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:8px}
+nav.tabs a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-weight:500;padding:8px 14px;border-radius:999px;font-size:14px}
+nav.tabs a[aria-current="page"]{background:var(--accent);color:var(--bg)}
+nav.tabs a:focus-visible,button:focus-visible,label.chk:focus-within{outline:2px solid var(--gold);outline-offset:2px}
+section.view{display:grid;gap:28px}
+.block{display:grid;gap:12px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;align-content:start;min-width:0}
+.tile{display:grid;gap:4px}
+.big{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.small{font-size:13px;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.pill.gold{background:var(--gold-soft);color:var(--gold)}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+ul.checks{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+label.chk{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-radius:8px;cursor:pointer}
+label.chk:hover{background:var(--accent-soft)}
+label.chk input{appearance:none;flex:0 0 20px;width:20px;height:20px;margin:1px 0 0;border:1.5px solid var(--muted);border-radius:6px;display:grid;place-content:center;cursor:pointer;background:var(--surface)}
+label.chk input:checked{background:var(--ok);border-color:var(--ok)}
+label.chk input:checked::after{content:"";width:10px;height:6px;border:2px solid var(--surface);border-top:0;border-right:0;transform:translateY(-1px) rotate(-45deg)}
+label.chk input:checked + span{color:var(--muted);text-decoration:line-through}
+.statement{font-family:var(--f-display);font-size:clamp(19px,3vw,24px);line-height:1.4;max-width:40ch}
+.funnel{display:grid;gap:8px}
+.step{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.step b.n{font-variant-numeric:tabular-nums;width:28px;height:28px;border-radius:50%;display:grid;place-content:center;background:var(--gold-soft);color:var(--gold);font-size:13px}
+.step:nth-child(2){margin-left:min(4%,24px)}.step:nth-child(3){margin-left:min(8%,48px)}.step:nth-child(4){margin-left:min(12%,72px)}
+.months{display:grid;gap:8px}
+.month{display:grid;grid-template-columns:88px 1fr;gap:12px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.month.now{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.month .m{font-weight:600;font-size:13px;color:var(--muted)}
+.month.now .m{color:var(--accent)}
+.chan-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.chan-tabs button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer}
+.chan-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.week{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.note{font-size:13px;color:var(--muted);border-left:2px solid var(--gold);padding-left:10px}
+.sync{font-size:12px;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+.wk-head{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.wk-title{min-width:0;text-align:center}
+.nav-btn{font:inherit;font-size:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.wk-tools{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.wk-tools .copy{margin-top:0}
+.pubs{display:grid;gap:10px}
+.pubs .ch{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:4px}
+.wk-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.wk-chip{font:inherit;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:8px 10px;cursor:pointer;display:grid;gap:4px}
+.wk-chip[aria-current="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.wk-chip .small{font-size:12px}
+.wk-chip.now .small:first-child{color:var(--accent);font-weight:600}
+.post{border-top:1px solid var(--line);padding-top:8px;display:grid;gap:6px}
+.post:first-of-type{border-top:0;padding-top:0}
+.post details summary{cursor:pointer;font-size:13px;color:var(--accent);font-weight:500}
+.post pre{white-space:pre-wrap;font:inherit;font-size:14px;margin:8px 0 0;padding:12px;background:var(--bg);border-radius:8px;max-height:360px;overflow:auto}
+.post .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.copy{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:4px 12px;border-radius:999px;cursor:pointer;margin-top:8px}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+@media (max-width:520px){.month{grid-template-columns:1fr;gap:2px}.step:nth-child(n){margin-left:0}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Tumar Family Office · Галия Багдат · ноябрь 2026 – октябрь 2027</div>
+    <h1>Маркетинговая стратегия на год</h1>
+    <p class="lead">Личный бренд Галии, продажи семейных программ и профориентации, контент по всем каналам. Отмечайте выполненное, прогресс считается сам.</p>
+    <p class="sync" id="sync">Загружаю отметки…</p>
+  </header>
+
+  <nav class="tabs" aria-label="Разделы"><div class="inner">
+    <a href="#overview">Обзор</a>
+    <a href="#week">Неделя</a>
+    <a href="#strategy">Стратегия</a>
+    <a href="#roadmap">План года</a>
+    <a href="#content">Контент</a>
+    <a href="#media">Forbes и LinkedIn</a>
+  </div></nav>
+
+  <!-- ОБЗОР -->
+  <section class="view" id="v-overview" data-view="overview">
+    <div class="grid" id="tiles"></div>
+    <div class="grid">
+      <div class="card" id="now-card">
+        <span class="pill">Сейчас</span>
+        <h3 id="now-title"></h3>
+        <p class="small" id="now-text"></p>
+      </div>
+      <div class="card">
+        <span class="pill ok">Эта неделя</span>
+        <h3 id="ov-week"></h3>
+        <div class="bar"><i id="ov-week-bar"></i></div>
+        <a href="#week" class="small" style="color:var(--accent)">Открыть задачи недели →</a>
+      </div>
+      <div class="card">
+        <span class="pill gold">Следующая колонка Forbes</span>
+        <h3 id="forbes-next"></h3>
+        <p class="small" id="forbes-next-m"></p>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Краткосрочные цели · до февраля 2027</h3><ul class="checks" data-list="goals_short"></ul></div>
+      <div class="card"><h3>Долгосрочные цели · к октябрю 2027</h3><ul class="checks" data-list="goals_long"></ul></div>
+    </div>
+  </section>
+
+  <!-- НЕДЕЛЯ -->
+  <section class="view" id="v-week" data-view="week" hidden>
+    <div class="wk-head">
+      <button type="button" class="nav-btn" id="wk-prev" aria-label="Предыдущая неделя">←</button>
+      <div class="wk-title">
+        <div class="eyebrow" id="wk-num"></div>
+        <h2 id="wk-dates"></h2>
+        <p class="small" id="wk-theme"></p>
+      </div>
+      <button type="button" class="nav-btn" id="wk-next" aria-label="Следующая неделя">→</button>
+    </div>
+    <div class="wk-tools">
+      <button type="button" class="copy" id="wk-today">К текущей неделе</button>
+      <span class="small" id="wk-count"></span>
+    </div>
+    <div class="bar"><i id="wk-bar"></i></div>
+    <div class="grid">
+      <div class="card"><h3>Задачи недели</h3><ul class="checks" id="wk-proj"></ul></div>
+      <div class="card"><h3>Публикации</h3><div id="wk-pub" class="pubs"></div></div>
+    </div>
+    <div class="block">
+      <h3>Все недели</h3>
+      <div class="wk-strip" id="wk-strip"></div>
+    </div>
+  </section>
+
+  <!-- СТРАТЕГИЯ -->
+  <section class="view" id="v-strategy" data-view="strategy" hidden>
+    <div class="block">
+      <div class="eyebrow">Позиционирование</div>
+      <p class="statement">Галия Багдат — ведущий голос темы семейной преемственности и подготовки Next Generation в Казахстане и Центральной Азии.</p>
+      <p class="lead">Главный нарратив: первое поколение создало капитал. Следующий этап — научиться им владеть, передать его и создать наследие. Тон: спокойный, профессиональный, конфиденциальный. Маркетинг строится на доверии и рекомендациях, а не на массовой рекламе.</p>
+    </div>
+    <div class="block">
+      <h2>Три опоры стратегии</h2>
+      <div class="grid" id="pillars"></div>
+    </div>
+    <div class="block">
+      <h2>Лестница продуктов</h2>
+      <p class="lead">Семья знакомится с Галией через доступный продукт и поднимается к полному сопровождению.</p>
+      <div class="funnel" id="funnel"></div>
+    </div>
+    <div class="block">
+      <h2>Аудитории</h2>
+      <div class="tbl"><table id="aud"><thead><tr><th>Кто</th><th>Что их волнует</th><th>Где их найти</th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="block">
+      <h2>Что отслеживаем</h2>
+      <div class="grid" id="kpi"></div>
+      <p class="note">Целевые цифры заполните после первого месяца, когда будет базовая точка.</p>
+    </div>
+  </section>
+
+  <!-- ПЛАН ГОДА -->
+  <section class="view" id="v-roadmap" data-view="roadmap" hidden>
+    <div class="grid" id="quarters"></div>
+  </section>
+
+  <!-- КОНТЕНТ -->
+  <section class="view" id="v-content" data-view="content" hidden>
+    <div class="block">
+      <h2>План постов по каналам</h2>
+      <div class="chan-tabs" id="chan-tabs" role="group" aria-label="Канал"></div>
+      <div id="chan-body" class="block"></div>
+    </div>
+    <div class="block" id="tg-posts">
+      <h2>Telegram: готовые посты на первый месяц</h2>
+      <p class="lead">12 постов по неделям. Откройте пост, скопируйте текст и отметьте, когда опубликуете.</p>
+      <div class="bar"><i id="tg-bar"></i></div>
+      <p class="small" id="tg-count"></p>
+      <div class="grid" id="tg-weeks"><p class="small">Загружаю посты…</p></div>
+    </div>
+    <div class="block">
+      <h2>Темы месяцев</h2>
+      <p class="lead">Одна тема на месяц для всех каналов. С ноября по апрель темы идут за модулями годовой программы.</p>
+      <div class="months" id="months"></div>
+    </div>
+  </section>
+
+  <!-- FORBES И LINKEDIN -->
+  <section class="view" id="v-media" data-view="media" hidden>
+    <div class="block">
+      <h2>Колонки в Forbes Kazakhstan</h2>
+      <p class="lead">Четыре экспертных материала за год, по одному в квартал. Каждый потом разносим по LinkedIn, Telegram и Instagram.</p>
+      <div class="grid" id="forbes"></div>
+      <p class="note">Формат (колонка эксперта, интервью или партнёрский материал) и условия публикации уточнить у редакции до первого питча.</p>
+    </div>
+    <div class="block">
+      <h2>Запуск LinkedIn Галии</h2>
+      <div class="grid">
+        <div class="card"><h3>Профиль</h3><ul class="checks" data-list="li_profile"></ul></div>
+        <div class="card"><h3>Первые 30 дней</h3><ul class="checks" data-list="li_launch"></ul></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+const DATA = {
+  goals_short:[
+    ["gs0","Запустить сайт Галии Багдат: кто она, её работы и все продукты для клиентов"],
+    ["gs1","Утвердить позиционирование и стратегию с Галией"],
+    ["gs2","Упаковать профориентацию: описание, цена, что предлагаем после консультации"],
+    ["gs3","Открыть и оформить LinkedIn Галии"],
+    ["gs4","Запустить Telegram-канал, держать ритм 3 поста в неделю"],
+    ["gs5","Опубликовать первую колонку в Forbes Kazakhstan"],
+    ["gs6","Провести встречу с Freedom по пилотной группе"],
+    ["gs7","Собрать отзывы семей после модуля 1 (с их согласия)"]
+  ],
+  goals_long:[
+    ["gl1","Набрать вторую когорту годовой программы, не только из YPO"],
+    ["gl2","Выйти с 4 колонками в Forbes за год"],
+    ["gl3","Заключить 1–3 партнёрства с частными банками"],
+    ["gl4","Получать заявки на профориентацию каждый месяц и переводить часть семей в программы"],
+    ["gl5","Закрепить Галию как спикера темы: Ассоциация, саммит, интервью"]
+  ],
+  quarters:[
+    {id:"q1",name:"Фундамент",months:"Ноябрь – январь",items:[
+      ["q1a","Согласовать с Галией позиционирование и тон"],
+      ["q1k","Запустить сайт Галии Багдат с продуктами"],
+      ["q1b","Фото- и видеосъёмка Галии для всех каналов"],
+      ["q1c","Оформить LinkedIn Галии и страницу Tumar"],
+      ["q1d","Запустить Telegram-канал"],
+      ["q1e","Привести в порядок Instagram: шапка, хайлайты, закреп"],
+      ["q1f","Упаковать профориентацию и страницу записи"],
+      ["q1g","Контент по модулю 1 «Кто мы?» (без имён семей)"],
+      ["q1h","Forbes: питч и колонка №1"],
+      ["q1i","Встреча с Freedom: пилот и знакомство с семьями"],
+      ["q1j","Завести таблицу заявок и источников"]
+    ]},
+    {id:"q2",name:"Голос эксперта",months:"Февраль – апрель",items:[
+      ["q2a","Запустить YouTube: 2 видео в месяц"],
+      ["q2b","Forbes: колонка №2"],
+      ["q2c","Весенняя кампания профориентации для родителей"],
+      ["q2d","Контент по модулям 2–4 и выпуску программы"],
+      ["q2e","Закрытый ужин или круглый стол для 10–15 семей"],
+      ["q2f","Собрать 3 кейса и отзыва для продаж"]
+    ]},
+    {id:"q3",name:"Набор второй когорты",months:"Май – июль",items:[
+      ["q3a","Открыть набор в программу 2027–2028"],
+      ["q3b","Страница программы с заявкой"],
+      ["q3c","Forbes: колонка №3"],
+      ["q3d","Летний интенсив профориентации"],
+      ["q3e","Совместный вебинар или встреча с банком-партнёром"],
+      ["q3f","Рассылка выпускникам и YPO с приглашением"]
+    ]},
+    {id:"q4",name:"Авторитет",months:"Август – октябрь",items:[
+      ["q4a","Кампания «новый учебный год» для профориентации"],
+      ["q4b","Forbes: колонка №4"],
+      ["q4c","Выступление Галии на форуме или саммите Ассоциации"],
+      ["q4d","Закрыть набор второй когорты"],
+      ["q4e","Итоги года и маркетинговый план на 2028"]
+    ]}
+  ],
+  forbes:[
+    {id:"f1",m:"Декабрь 2026",y:2026,mo:11,t:"У вашей компании есть стратегия. А у вашей семьи?",d:"Почему преемственность нельзя откладывать и чем бизнес-династия отличается от семьи с бизнесом."},
+    {id:"f2",m:"Март 2027",y:2027,mo:2,t:"Наследник или владелец: как готовить Next Generation",d:"Готовность следующего поколения как главный риск семейного капитала в Казахстане."},
+    {id:"f3",m:"Июнь 2027",y:2027,mo:5,t:"Семейная конституция: зачем она бизнесу",d:"Правила решений, семейный совет и разрешение споров на практике."},
+    {id:"f4",m:"Сентябрь 2027",y:2027,mo:8,t:"Капитал через 20 лет",d:"Как предпринимательские семьи Центральной Азии думают о наследии и филантропии."}
+  ],
+  forbes_steps:["Питч редакции","Текст согласован с Галией","Опубликовано","Разнесено по каналам"],
+  li_profile:[
+    ["lp1","Профессиональное фото и обложка с позиционированием"],
+    ["lp2","Заголовок: «Основатель Tumar Family Office · семейная стратегия и Next Generation»"],
+    ["lp3","Раздел «О себе»: 28 лет управленческого опыта, 13 лет в коучинге лидеров"],
+    ["lp4","Опыт и форум 2024 в разделе «Избранное»"],
+    ["lp5","Версия профиля на английском для международной сети"],
+    ["lp6","Страница компании Tumar Family Office"]
+  ],
+  li_launch:[
+    ["ll1","Добавить первые 100 контактов: YPO, партнёры, выпускники"],
+    ["ll2","Пост-знакомство от первого лица"],
+    ["ll3","Ритм 2 поста в неделю, 4 недели подряд"],
+    ["ll4","Комментировать 5 постов целевых людей в неделю"],
+    ["ll5","Первая статья LinkedIn (по мотивам колонки Forbes)"]
+  ],
+  pillars:[
+    ["Личный бренд Галии","Экспертиза, лицо и голос в LinkedIn, Forbes, YouTube. Люди покупают у Галии, а не у компании."],
+    ["Лестница продуктов","Профориентация как вход, затем диагностика семьи, годовая программа и полное сопровождение."],
+    ["Партнёрские каналы","YPO, Freedom и частные банки, юридические фирмы, Ассоциация Family Office. Доступ к семьям через доверенных посредников."]
+  ],
+  funnel:[
+    ["Профориентация для подростка","Разовая консультация и разговор с родителями. Знакомство семьи с Галией."],
+    ["Диагностика семьи","Встреча и короткая диагностика: где семья сейчас, что дальше."],
+    ["Годовая программа Next Generation","4 модуля, работа в семье, прототип семейной конституции."],
+    ["Полное семейное сопровождение","Многолетняя работа с семьёй: управление, преемственность, приватные сессии."]
+  ],
+  aud:[
+    ["Основатели семейного бизнеса","Кому передать бизнес, готовы ли дети, как избежать конфликтов","YPO, банки, LinkedIn, Forbes, закрытые ужины"],
+    ["Next Generation, 18–35","Кто я помимо фамилии, путь в бизнес семьи","LinkedIn, YouTube, Telegram, программы"],
+    ["Родители подростков","Какую профессию и вуз выбрать, как поговорить с ребёнком","Instagram, Telegram, школы, рекомендации"],
+    ["Партнёры","Удержание капитала клиентов в следующем поколении","Личные встречи, LinkedIn, Ассоциация"]
+  ],
+  kpi:[
+    ["Заявки на профориентацию","в месяц, по источникам"],
+    ["Переход в программы","доля семей после профориентации"],
+    ["Семьи в когорте","программа 2027–2028"],
+    ["Подписчики и охват","по каждому каналу"],
+    ["Публикации в СМИ","Forbes и интервью"],
+    ["Партнёрства","подписанные соглашения"]
+  ],
+  channels:{
+    telegram:{name:"Telegram",rhythm:"3–4 поста в неделю",goal:"Три направления: юридическое, финансовое и подготовка наследников. Форматы: экспертные посты, кейсы, вопрос-ответ, образовательные серии.",week:[
+      ["Понедельник","Юридический","Наследование, структуры владения, защита активов"],
+      ["Среда","Финансовый","Капитал, private banking, финансовая грамотность семьи"],
+      ["Пятница","Наследники","Лидерство, семейные стратегии, подготовка преемника"]]},
+    instagram:{name:"Instagram",rhythm:"3 публикации в неделю + сторис ежедневно",goal:"Лицо Галии для родителей и вход в профориентацию.",week:[
+      ["Reels, 1–2 в неделю","Вопрос родителя","Галия отвечает на один вопрос о выборе профессии или разговоре с ребёнком"],
+      ["Карусель, 1 в неделю","Польза","Шаги, ошибки, мини-тест для семьи"],
+      ["Сторис, каждый день","Жизнь и доверие","Закулисье, опросы, отзывы, запись на консультацию"]]},
+    linkedin:{name:"LinkedIn",rhythm:"2 поста в неделю + 1 статья в месяц",goal:"Основатели, партнёры, международная сеть.",week:[
+      ["Вторник","Экспертный пост","Наблюдение из практики, мировая практика семейных офисов"],
+      ["Четверг","Комментарий","Реакция на исследование, событие, новость рынка"],
+      ["Раз в месяц","Статья","Расширенная версия колонки Forbes, есть версия на английском"]]},
+    youtube:{name:"YouTube",rhythm:"2 видео в месяц, с февраля 2027",goal:"Авторитет и длинный формат, нарезки для Instagram.",week:[
+      ["Видео 1","Разбор темы, 15–20 минут","Тема месяца: преемственность, конституция, Next Generation"],
+      ["Видео 2","Интервью","Разговор с основателем, наследником или экспертом (с согласия)"],
+      ["Из каждого видео","3–5 Shorts","Нарезки для Reels и Shorts"]]}
+  },
+  months:[
+    [2026,10,"Ноябрь","Кто мы? Ценности и идентичность семьи","Модуль 1, запуск Telegram и LinkedIn"],
+    [2026,11,"Декабрь","Семейная история и пять капиталов","Колонка Forbes №1, итоги года"],
+    [2027,0,"Январь","Разговор поколений: с чего начать","Задания в семье между модулями"],
+    [2027,1,"Февраль","Как семья принимает решения","Модуль 2, семейный совет, старт YouTube"],
+    [2027,2,"Март","Капитал и финансовая грамотность детей","Модуль 3, колонка №2, весна профориентации"],
+    [2027,3,"Апрель","Лидерство и передача ответственности","Модуль 4, выпуск программы"],
+    [2027,4,"Май","Выбор профессии и вуза","Пик профориентации перед поступлением"],
+    [2027,5,"Июнь","Путь Next Generation в семейный бизнес","Колонка №3, открыт набор"],
+    [2027,6,"Июль","Наследие и филантропия","Летний интенсив профориентации"],
+    [2027,7,"Август","Готовимся к учебному году","Кампания для родителей"],
+    [2027,8,"Сентябрь","Семейная конституция","Колонка №4, набор новой группы"],
+    [2027,9,"Октябрь","Итоги года и программа 2027–2028","Закрытие набора, план на 2028"]
+  ]
+};
+
+const done = new Set();
+let db = null, mode = "local";
+const $ = s => document.querySelector(s);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+function checkItem(id, text){
+  const li = el("li"); const lab = el("label","chk");
+  const inp = document.createElement("input"); inp.type = "checkbox"; inp.id = "c-"+id; inp.dataset.id = id;
+  lab.append(inp, el("span", null, text)); li.append(lab); return li;
+}
+
+// static render
+function build(){
+  document.querySelectorAll("ul[data-list]").forEach(ul => DATA[ul.dataset.list].forEach(([id,t]) => ul.append(checkItem(id,t))));
+  const pil = $("#pillars"); DATA.pillars.forEach(([h,t]) => { const c = el("div","card"); c.append(el("h3",null,h), el("p","small",t)); pil.append(c); });
+  const fun = $("#funnel"); DATA.funnel.forEach(([h,t],i) => { const s = el("div","step"); const n = el("b","n",String(i+1)); const b = el("div"); b.append(el("h3",null,h), el("p","small",t)); s.append(n,b); fun.append(s); });
+  const tb = $("#aud tbody"); DATA.aud.forEach(r => { const tr = el("tr"); r.forEach((c,i) => { const td = el("td",null,c); if(!i) td.style.fontWeight="600"; tr.append(td); }); tb.append(tr); });
+  const k = $("#kpi"); DATA.kpi.forEach(([h,t]) => { const c = el("div","card tile"); c.append(el("h3",null,h), el("p","small",t)); k.append(c); });
+  const q = $("#quarters"); DATA.quarters.forEach((qq,i) => {
+    const c = el("div","card"); const head = el("div"); head.style.display="flex"; head.style.justifyContent="space-between"; head.style.gap="8px"; head.style.alignItems="baseline";
+    head.append(el("span","pill","Q"+(i+1)+" · "+qq.months), el("span","small"));
+    head.lastChild.id = "qc-"+qq.id;
+    const bar = el("div","bar"); const bi = el("i"); bi.id = "qb-"+qq.id; bar.append(bi);
+    const ul = el("ul","checks"); qq.items.forEach(([id,t]) => ul.append(checkItem(id,t)));
+    c.append(head, el("h3",null,qq.name), bar, ul); q.append(c);
+  });
+  const f = $("#forbes"); DATA.forbes.forEach((a,i) => {
+    const c = el("div","card"); c.append(el("span","pill gold","№"+(i+1)+" · "+a.m), el("h3",null,"«"+a.t+"»"), el("p","small",a.d));
+    const ul = el("ul","checks"); DATA.forbes_steps.forEach((s,j) => ul.append(checkItem(a.id+"s"+j, s))); c.append(ul); f.append(c);
+  });
+  const mo = $("#months"); const now = new Date();
+  DATA.months.forEach(([y,m,name,theme,note]) => {
+    const r = el("div","month"); if (now.getFullYear()===y && now.getMonth()===m) r.classList.add("now");
+    const b = el("div"); b.append(el("h3",null,theme), el("p","small",note));
+    r.append(el("div","m",name+" "+y), b); mo.append(r);
+  });
+  // channels
+  const ct = $("#chan-tabs"); Object.entries(DATA.channels).forEach(([key,c],i) => {
+    const b = el("button",null,c.name); b.type="button"; b.id="ch-"+key; b.setAttribute("aria-pressed", i? "false":"true");
+    b.addEventListener("click", () => showChannel(key)); ct.append(b);
+  });
+  let start = "telegram"; try { start = localStorage.getItem("tumar-chan") || start; } catch(e){}
+  if (!DATA.channels[start]) start = "telegram";
+  showChannel(start);
+  // current month card
+  const cur = DATA.months.find(([y,m]) => now.getFullYear()===y && now.getMonth()===m) || DATA.months[0];
+  $("#now-title").textContent = cur[2]+" "+cur[0]+": "+cur[3];
+  $("#now-text").textContent = cur[4];
+}
+
+function showChannel(key){
+  const c = DATA.channels[key];
+  document.querySelectorAll("#chan-tabs button").forEach(b => b.setAttribute("aria-pressed", b.id==="ch-"+key ? "true":"false"));
+  const body = $("#chan-body"); body.replaceChildren();
+  const head = el("div","card"); head.append(el("span","pill",c.rhythm), el("p",null,c.goal)); body.append(head);
+  const w = el("div","week"); c.week.forEach(([d,h,t]) => { const x = el("div","card"); x.append(el("span","small",d), el("h3",null,h), el("p","small",t)); w.append(x); });
+  body.append(w);
+  try { localStorage.setItem("tumar-chan", key); } catch(e){}
+}
+
+function allIds(){
+  const ids = [];
+  DATA.goals_short.forEach(x=>ids.push(x[0])); DATA.goals_long.forEach(x=>ids.push(x[0]));
+  DATA.quarters.forEach(q=>q.items.forEach(x=>ids.push(x[0])));
+  return ids;
+}
+
+function refresh(){
+  document.querySelectorAll("input[data-id]").forEach(i => { i.checked = done.has(i.dataset.id); });
+  const cnt = arr => arr.filter(id => done.has(id)).length;
+  const plan = []; DATA.quarters.forEach(q => q.items.forEach(x => plan.push(x[0])));
+  DATA.quarters.forEach(q => { const ids = q.items.map(x=>x[0]); const n = cnt(ids);
+    $("#qc-"+q.id).textContent = n+" из "+ids.length; $("#qb-"+q.id).style.width = (100*n/ids.length)+"%"; });
+  const gs = DATA.goals_short.map(x=>x[0]), gl = DATA.goals_long.map(x=>x[0]);
+  const fPub = DATA.forbes.filter(a => done.has(a.id+"s2")).length;
+  const tiles = [
+    ["План года", cnt(plan)+" / "+plan.length, plan.length? cnt(plan)/plan.length : 0, "задач выполнено"],
+    ["Краткосрочные цели", cnt(gs)+" / "+gs.length, cnt(gs)/gs.length, "до февраля 2027"],
+    ["Долгосрочные цели", cnt(gl)+" / "+gl.length, cnt(gl)/gl.length, "к октябрю 2027"],
+    ["Forbes", fPub+" / 4", fPub/4, "колонок опубликовано"]
+  ];
+  const t = $("#tiles"); t.replaceChildren();
+  tiles.forEach(([h,v,p,s]) => { const c = el("div","card tile"); const bar = el("div","bar"); const bi = el("i"); bi.style.width=(100*p)+"%"; bar.append(bi);
+    c.append(el("span","small",h), el("span","big",v), bar, el("span","small",s)); t.append(c); });
+  renderWeek();
+  if (TG.length){ const n = TG.filter((p,i)=>done.has("tg"+i)).length;
+    $("#tg-bar").style.width = (100*n/TG.length)+"%"; $("#tg-count").textContent = "Опубликовано "+n+" из "+TG.length; }
+  const next = DATA.forbes.find(a => !done.has(a.id+"s2"));
+  $("#forbes-next").textContent = next ? "«"+next.t+"»" : "Все 4 колонки вышли";
+  $("#forbes-next-m").textContent = next ? next.m : "";
+}
+
+// storage
+function loadLocal(){ try { JSON.parse(localStorage.getItem("tumar-done")||"[]").forEach(id=>done.add(id)); } catch(e){} }
+function saveLocal(){ try { localStorage.setItem("tumar-done", JSON.stringify([...done])); } catch(e){} }
+
+document.addEventListener("change", async ev => {
+  const i = ev.target; if (!i.matches || !i.matches("input[data-id]")) return;
+  const id = i.dataset.id; if (i.checked) done.add(id); else done.delete(id);
+  refresh();
+  if (mode === "db" && db){
+    try { const ref = db.collection("done").doc(id);
+      if (i.checked) await ref.set({done:true, at:new Date().toISOString()}); else await ref.delete();
+    } catch(e){ $("#sync").textContent = "Не удалось сохранить отметку. Проверьте интернет и отметьте ещё раз."; }
+  } else saveLocal();
+});
+
+// routing
+const VIEWS = ["overview","week","strategy","roadmap","content","media"];
+function route(){
+  const h = (location.hash||"").replace("#",""); const v = VIEWS.includes(h) ? h : "overview";
+  document.querySelectorAll("section.view").forEach(s => s.hidden = s.dataset.view !== v);
+  document.querySelectorAll("nav.tabs a").forEach(a => a.getAttribute("href")==="#"+v ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
+}
+window.addEventListener("hashchange", route);
+
+let TG = [];
+const DAY = {"Юридический":"Пн","Финансовый":"Ср","Наследники":"Пт"};
+function buildTG(){
+  const box = $("#tg-weeks"); box.replaceChildren();
+  [1,2,3,4].forEach(w => {
+    const c = el("div","card"); c.append(el("span","pill","Неделя "+w));
+    TG.forEach((p,i) => { if (p.w !== w) return;
+      const d = el("div","post"); const ul = el("ul","checks");
+      ul.append(checkItem("tg"+i, (DAY[p.k]||"")+" · "+p.k+": «"+p.t+"»")); d.append(ul);
+      const det = document.createElement("details"); det.append(el("summary",null,"Текст поста"));
+      const pre = el("pre",null,p.b); const btn = el("button","copy","Скопировать"); btn.type="button";
+      btn.addEventListener("click", () => {
+        const ok = () => { btn.textContent = "Скопировано"; setTimeout(()=>btn.textContent="Скопировать",1500); };
+        const sel = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Текст выделен, скопируйте"; };
+        try { navigator.clipboard.writeText(p.b).then(ok, sel); } catch(e){ sel(); }
+      });
+      det.append(pre, btn); d.append(det); c.append(d);
+    });
+    box.append(c);
+  });
+}
+
+// ===== Недели: ближайшие 2 месяца =====
+const MONTHS_GEN = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+const W0 = new Date(2026,10,9); // понедельник, 9 ноября 2026
+const PROJ = {
+  1:["Создать страницу Tumar Family Office в LinkedIn и красиво оформить","Доделать дашборд с целями на год","ГЛАВНОЕ · Сайт Галии Багдат: кто она и что предлагает","Сайт: собрать материалы — биография, работы, фото, ссылки на соцсети, гайды","Сайт: описать продукты — профориентация, диагностика семьи, годовая программа, семейное сопровождение","Сайт: структура и тексты, согласовать с Галией","Сайт: форма заявки или анкета по семейной преемственности (можно позже)"],
+  2:["Согласовать стратегию и позиционирование с Галией","Узнать у Галии всё о профориентации: формат, возраст, цена, кто покупает","Договориться о фото- и видеосъёмке Галии","Создать Telegram-канал и опубликовать пост-знакомство","Завести таблицу заявок и источников"],
+  3:["Провести съёмку Галии","Оформить профиль LinkedIn: фото, обложка, заголовок, «О себе»","Instagram: обновить шапку, хайлайты, закреп"],
+  4:["LinkedIn: добавить первые 100 контактов (YPO, партнёры, выпускники)","Forbes: найти контакт редакции и отправить питч колонки №1","Контент по модулю 1 «Кто мы?» без имён семей"],
+  5:["Упаковать профориентацию: описание, цена, что предлагаем после консультации","Forbes: черновик колонки №1"],
+  6:["Сделать страницу или пост для записи на профориентацию","Forbes: согласовать текст колонки с Галией","Подготовить предложение для Freedom"],
+  7:["Forbes: сдать колонку №1 в редакцию","Пост с итогами года от Галии","Контент-план на январь"],
+  8:["Праздники: публикации по облегчённому графику","Собрать отзывы семей после модуля 1 (с согласия)"],
+  9:["Встреча с Freedom: пилот и знакомство с семьями","Разнести колонку Forbes по каналам, если вышла","Подвести итоги двух месяцев: что сработало"]
+};
+const WEEKS = [];
+for (let n=1; n<=9; n++){
+  const mon = new Date(W0); mon.setDate(W0.getDate()+(n-1)*7);
+  const sun = new Date(mon); sun.setDate(mon.getDate()+6);
+  const dates = mon.getMonth()===sun.getMonth()
+    ? mon.getDate()+"–"+sun.getDate()+" "+MONTHS_GEN[sun.getMonth()]
+    : mon.getDate()+" "+MONTHS_GEN[mon.getMonth()]+" – "+sun.getDate()+" "+MONTHS_GEN[sun.getMonth()];
+  const proj = PROJ[n].map((t,i) => ["w"+n+"p"+i, t]);
+  const pubs = [];
+  if (n===1){
+    pubs.push(["Instagram Tumar", [["w1ig1","Пост 1"],["w1ig2","Пост 2"],["w1ig3","Пост 3"]]]);
+    pubs.push(["Instagram Галии", [["w1gig1","1 пост"]]]);
+    pubs.push(["Telegram Tumar", [["w1tg1","Пост в канале"]]]);
+  }
+  if (n>=2){
+    const tg = [];
+    if (n<=5){ ["Юридический","Финансовый","Наследники"].forEach(k => { const i = TG.findIndex(p => p.w===n-1 && p.k===k);
+      tg.push(i>=0 ? ["tg"+i, DAY[k]+" · «"+TG[i].t+"»"] : ["w"+n+"tg"+k, DAY[k]+" · "+k+" пост"]); }); }
+    else { tg.push(["w"+n+"tg1","Пн · Юридический пост"],["w"+n+"tg2","Ср · Финансовый пост"],["w"+n+"tg3","Пт · Пост о наследниках"]); }
+    pubs.push(["Telegram", tg]);
+  }
+  if (n>=3) pubs.push(["Instagram", [["w"+n+"ig1","Reels: Галия отвечает на вопрос родителя"],["w"+n+"ig2","Карусель с пользой для семьи"],["w"+n+"ig3","Сторис минимум 5 дней из 7"]]]);
+  if (n>=4) pubs.push(["LinkedIn", [["w"+n+"li1","Вт · Экспертный пост"],["w"+n+"li2","Чт · Комментарий к новости или исследованию"]]]);
+  if (n>=2) pubs.push(["Итоги недели", [["w"+n+"m","Пт · Записать цифры: заявки, подписчики, охваты"]]]);
+  WEEKS.push({n, mon, sun, dates, proj, pubs});
+}
+function weekIds(w){ const ids = w.proj.map(x=>x[0]); w.pubs.forEach(([,items]) => items.forEach(x=>ids.push(x[0]))); return ids; }
+function currentWeekIdx(){ const t = new Date(); t.setHours(12);
+  const i = WEEKS.findIndex(w => t >= w.mon && t <= new Date(w.sun.getFullYear(), w.sun.getMonth(), w.sun.getDate(), 23, 59));
+  return i>=0 ? i : (t < WEEKS[0].mon ? 0 : WEEKS.length-1); }
+let wkIdx = currentWeekIdx();
+try { const s = parseInt(sessionStorage.getItem("tumar-wk"),10); if (s>=0 && s<WEEKS.length) wkIdx = s; } catch(e){}
+
+function renderWeek(){
+  if (!WEEKS.length) return;
+  const w = WEEKS[wkIdx], cur = currentWeekIdx();
+  $("#wk-num").textContent = "Неделя "+w.n+" из "+WEEKS.length+(wkIdx===cur ? " · сейчас" : "");
+  $("#wk-dates").textContent = w.dates;
+  const m = DATA.months.find(([y,mo]) => y===w.mon.getFullYear() && mo===w.mon.getMonth());
+  $("#wk-theme").textContent = m ? "Тема месяца: "+m[3] : "";
+  $("#wk-prev").disabled = wkIdx===0; $("#wk-next").disabled = wkIdx===WEEKS.length-1;
+  const pu = $("#wk-proj"); pu.replaceChildren(); w.proj.forEach(([id,t]) => pu.append(checkItem(id,t)));
+  const pb = $("#wk-pub"); pb.replaceChildren();
+  if (!w.pubs.length) pb.append(el("p","small","На этой неделе готовим каналы. Публикации начинаются со следующей недели."));
+  w.pubs.forEach(([ch,items]) => { pb.append(el("div","ch",ch)); const ul = el("ul","checks"); items.forEach(([id,t]) => ul.append(checkItem(id,t))); pb.append(ul); });
+  const ids = weekIds(w), n = ids.filter(id=>done.has(id)).length;
+  $("#wk-count").textContent = "Сделано "+n+" из "+ids.length;
+  $("#wk-bar").style.width = (100*n/ids.length)+"%";
+  document.querySelectorAll("#v-week input[data-id]").forEach(i => { i.checked = done.has(i.dataset.id); });
+  const st = $("#wk-strip"); st.replaceChildren();
+  WEEKS.forEach((x,i) => { const ids2 = weekIds(x), k = ids2.filter(id=>done.has(id)).length;
+    const b = el("button","wk-chip"+(i===cur?" now":"")); b.type="button"; if (i===wkIdx) b.setAttribute("aria-current","true");
+    b.append(el("span","small","Неделя "+x.n+(i===cur?" · сейчас":"")), el("span",null,x.dates), el("span","small",k+" / "+ids2.length));
+    b.addEventListener("click", () => setWeek(i)); st.append(b); });
+  const cw = WEEKS[cur], cids = weekIds(cw), cn = cids.filter(id=>done.has(id)).length;
+  $("#ov-week").textContent = cw.dates+": сделано "+cn+" из "+cids.length;
+  $("#ov-week-bar").style.width = (100*cn/cids.length)+"%";
+}
+function setWeek(i){ wkIdx = Math.max(0, Math.min(WEEKS.length-1, i)); try { sessionStorage.setItem("tumar-wk", String(wkIdx)); } catch(e){} renderWeek(); }
+$("#wk-prev").addEventListener("click", () => setWeek(wkIdx-1));
+$("#wk-next").addEventListener("click", () => setWeek(wkIdx+1));
+$("#wk-today").addEventListener("click", () => setWeek(currentWeekIdx()));
+function rebuildWeeks(){ // после загрузки постов подставляем их названия в недели 2–5
+  WEEKS.forEach(w => { if (w.n<2 || w.n>5) return; const tg = w.pubs.find(p=>p[0]==="Telegram"); if (!tg) return;
+    tg[1] = ["Юридический","Финансовый","Наследники"].map(k => { const i = TG.findIndex(p => p.w===w.n-1 && p.k===k);
+      return i>=0 ? ["tg"+i, DAY[k]+" · «"+TG[i].t+"»"] : ["w"+w.n+"tg"+k, DAY[k]+" · "+k+" пост"]; }); });
+}
+
+build(); route(); refresh();
+
+fetch("tg-posts.json").then(r => r.json()).then(j => { TG = Array.isArray(j) ? j : []; buildTG(); rebuildWeeks(); refresh(); })
+  .catch(() => { $("#tg-weeks").replaceChildren(el("p","small","Не удалось загрузить посты. Обновите страницу.")); });
+
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
+  if (!db){ mode = "local"; loadLocal(); refresh(); $("#sync").textContent = "Отметки сохраняются только на этом устройстве."; return; }
+  mode = "db";
+  db.collection("done").onSnapshot(snap => {
+    done.clear(); snap.docs.forEach(d => { if (d.exists) done.add(d.id); });
+    refresh(); $("#sync").textContent = "Отметки синхронизируются между iPhone и Mac.";
+  }, () => { $("#sync").textContent = "Синхронизация прервалась. Обновите страницу."; });
+})();
+})();
+</script>
+
+</body>
+</html>
