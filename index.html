@@ -118,9 +118,6 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 .btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .btn.del{color:#B3412F;margin-left:auto}
-.days{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
-.day.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
-.day .dh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
 .empty{font-size:13px;color:var(--muted);padding:4px}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 @media (max-width:520px){.month{grid-template-columns:1fr;gap:2px}.step:nth-child(n){margin-left:0}}
@@ -187,15 +184,10 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
     </div>
     <div class="bar"><i id="wk-bar"></i></div>
     <div class="grid">
-      <div class="card"><h3>Задачи на всю неделю</h3><ul class="checks" id="wk-proj"></ul>
-        <form class="addf" data-day="-1"><input type="text" placeholder="Новая задача на неделю" aria-label="Новая задача на неделю"><select aria-label="День"></select><button class="btn pri" type="submit">Добавить</button></form>
+      <div class="card"><h3>Задачи недели</h3><ul class="checks" id="wk-proj"></ul>
+        <form class="addf" data-day="-1"><input type="text" placeholder="Новая задача на неделю" aria-label="Новая задача на неделю"><button class="btn pri" type="submit">Добавить</button></form>
       </div>
       <div class="card"><h3>Публикации</h3><div id="wk-pub" class="pubs"></div></div>
-    </div>
-    <div class="block">
-      <h3>По дням</h3>
-      <p class="small">Задачи можно добавлять, переименовывать, переносить на другой день или удалять (✎).</p>
-      <div class="days" id="wk-days"></div>
     </div>
     <div class="block">
       <h3>Все недели</h3>
@@ -599,8 +591,6 @@ let wkIdx = currentWeekIdx();
 try { const s = parseInt(sessionStorage.getItem("tumar-wk"),10); if (s>=0 && s<WEEKS.length) wkIdx = s; } catch(e){}
 
 // ===== Свои задачи и правки =====
-const DAYS = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
-const DAYS_FULL = ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
 const TASKS = new Map(); // id -> {w,d,t,custom,hidden,at}
 let editing = null;
 function loadTasksLocal(){ try { Object.entries(JSON.parse(localStorage.getItem("tumar-tasks")||"{}")).forEach(([k,v])=>TASKS.set(k,v)); } catch(e){} }
@@ -620,27 +610,19 @@ function weekTasks(w){
   TASKS.forEach((o,id) => { if (o.custom && o.w===w.n && !o.hidden) out.push({id, t:o.t, d:(o.d==null?-1:o.d), custom:true, at:1e6+(o.at||0)}); });
   return out.sort((a,b)=>a.at-b.at);
 }
-function dayOptions(sel, cur, w){
-  sel.replaceChildren();
-  const o0 = el("option",null,"Вся неделя"); o0.value="-1"; sel.append(o0);
-  DAYS.forEach((d,i) => { const dt = new Date(w.mon); dt.setDate(w.mon.getDate()+i);
-    const o = el("option",null,d+", "+dt.getDate()+" "+MONTHS_GEN[dt.getMonth()]); o.value=String(i); sel.append(o); });
-  sel.value = String(cur);
-}
 function taskRow(task, w){
   const li = el("li");
   if (editing === task.id){
     const f = el("form","edit"); const inp = document.createElement("input"); inp.type="text"; inp.value=task.t; inp.setAttribute("aria-label","Текст задачи");
-    const row = el("div","row"); const sel = document.createElement("select"); sel.setAttribute("aria-label","День"); dayOptions(sel, task.d, w);
+    const row = el("div","row");
     const ok = el("button","btn pri","Сохранить"); ok.type="submit";
     const no = el("button","btn","Отмена"); no.type="button"; no.addEventListener("click",()=>{ editing=null; renderWeek(); });
     const del = el("button","btn del","Удалить"); del.type="button";
     del.addEventListener("click",()=>{ editing=null; done.delete(task.id); saveDoneQuiet(task.id);
       putTask(task.id, task.custom ? null : {...(TASKS.get(task.id)||{}), hidden:true}); });
-    row.append(sel, ok, no, del); f.append(inp, row);
+    row.append(ok, no, del); f.append(inp, row);
     f.addEventListener("submit", ev => { ev.preventDefault(); const t = inp.value.trim(); if (!t) return; editing=null;
-      const d = parseInt(sel.value,10);
-      putTask(task.id, task.custom ? {...TASKS.get(task.id), t, d} : {...(TASKS.get(task.id)||{}), t, d}); });
+      putTask(task.id, task.custom ? {...TASKS.get(task.id), t} : {...(TASKS.get(task.id)||{}), t}); });
     f.addEventListener("keydown", ev => { if (ev.key==="Escape"){ editing=null; renderWeek(); } });
     li.append(f); setTimeout(()=>inp.focus(),0); return li;
   }
@@ -653,10 +635,9 @@ function taskRow(task, w){
 async function saveDoneQuiet(id){ if (mode==="db" && db){ try { await db.collection("done").doc(id).delete(); } catch(e){} } else saveLocal(); }
 document.addEventListener("submit", ev => {
   const f = ev.target; if (!f.matches || !f.matches("form.addf")) return; ev.preventDefault();
-  const inp = f.querySelector("input"), sel = f.querySelector("select"); const t = inp.value.trim(); if (!t) return;
-  const d = sel ? parseInt(sel.value,10) : parseInt(f.dataset.day,10);
+  const inp = f.querySelector("input"); const t = inp.value.trim(); if (!t) return;
   const id = "u"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-  inp.value = ""; putTask(id, {w:WEEKS[wkIdx].n, d, t, custom:true, at:Date.now()});
+  inp.value = ""; putTask(id, {w:WEEKS[wkIdx].n, t, custom:true, at:Date.now()});
   setTimeout(()=>{ const again = document.querySelector('form.addf[data-day="'+f.dataset.day+'"] input'); if (again) again.focus(); },0);
 });
 
@@ -669,19 +650,9 @@ function renderWeek(){
   $("#wk-theme").textContent = m ? "Тема месяца: "+m[3] : "";
   $("#wk-prev").disabled = wkIdx===0; $("#wk-next").disabled = wkIdx===WEEKS.length-1;
   const tasks = weekTasks(w);
-  const pu = $("#wk-proj"); pu.replaceChildren(); const wt = tasks.filter(x=>x.d<0);
-  if (!wt.length) pu.append(el("li","empty","Задач на всю неделю нет."));
-  wt.forEach(x => pu.append(taskRow(x,w)));
-  const asel = document.querySelector('form.addf[data-day="-1"] select'); const keep = asel.value; dayOptions(asel, keep===""? -1 : parseInt(keep,10), w);
-  const dz = $("#wk-days"); dz.replaceChildren(); const today = new Date();
-  DAYS_FULL.forEach((dn,i) => { const dt = new Date(w.mon); dt.setDate(w.mon.getDate()+i);
-    const c = el("div","card day"); if (dt.toDateString()===today.toDateString()) c.classList.add("today");
-    const dh = el("div","dh"); dh.append(el("h3",null,dn), el("span","small",dt.getDate()+" "+MONTHS_GEN[dt.getMonth()]+(c.classList.contains("today")?" · сегодня":"")));
-    const ul = el("ul","checks"); const list = tasks.filter(x=>x.d===i); list.forEach(x => ul.append(taskRow(x,w)));
-    if (!list.length) ul.append(el("li","empty","Пока пусто"));
-    const f = el("form","addf"); f.dataset.day = String(i); const inp = document.createElement("input"); inp.type="text"; inp.placeholder="Добавить задачу"; inp.setAttribute("aria-label","Новая задача на "+dn);
-    const ab = el("button","btn","+"); ab.type="submit"; ab.setAttribute("aria-label","Добавить"); f.append(inp, ab);
-    c.append(dh, ul, f); dz.append(c); });
+  const pu = $("#wk-proj"); pu.replaceChildren();
+  if (!tasks.length) pu.append(el("li","empty","Задач на эту неделю нет."));
+  tasks.forEach(x => pu.append(taskRow(x,w)));
   const pb = $("#wk-pub"); pb.replaceChildren();
   if (!w.pubs.length) pb.append(el("p","small","На этой неделе готовим каналы. Публикации начинаются со следующей недели."));
   w.pubs.forEach(([ch,items]) => { pb.append(el("div","ch",ch)); const ul = el("ul","checks"); items.forEach(([id,t]) => ul.append(checkItem(id,t))); pb.append(ul); });
