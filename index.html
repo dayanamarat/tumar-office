@@ -189,10 +189,6 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
       </div>
       <div class="card"><h3>Публикации</h3><div id="wk-pub" class="pubs"></div></div>
     </div>
-    <div class="block">
-      <h3>Все недели</h3>
-      <div class="wk-strip" id="wk-strip"></div>
-    </div>
   </section>
 
   <!-- СТРАТЕГИЯ -->
@@ -660,11 +656,7 @@ function renderWeek(){
   $("#wk-count").textContent = "Сделано "+n+" из "+ids.length;
   $("#wk-bar").style.width = (ids.length? 100*n/ids.length : 0)+"%";
   document.querySelectorAll("#v-week input[data-id]").forEach(i => { i.checked = done.has(i.dataset.id); });
-  const st = $("#wk-strip"); st.replaceChildren();
-  WEEKS.forEach((x,i) => { const ids2 = weekIds(x), k = ids2.filter(id=>done.has(id)).length;
-    const b = el("button","wk-chip"+(i===cur?" now":"")); b.type="button"; if (i===wkIdx) b.setAttribute("aria-current","true");
-    b.append(el("span","small","Неделя "+x.n+(i===cur?" · сейчас":"")), el("span",null,x.dates), el("span","small",k+" / "+ids2.length));
-    b.addEventListener("click", () => setWeek(i)); st.append(b); });
+
   const cw = WEEKS[cur], cids = weekIds(cw), cn = cids.filter(id=>done.has(id)).length;
   $("#ov-week").textContent = cw.dates+": сделано "+cn+" из "+cids.length;
   $("#ov-week-bar").style.width = (cids.length? 100*cn/cids.length : 0)+"%";
