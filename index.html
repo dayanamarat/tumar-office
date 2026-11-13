@@ -106,6 +106,22 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
 .post pre{white-space:pre-wrap;font:inherit;font-size:14px;margin:8px 0 0;padding:12px;background:var(--bg);border-radius:8px;max-height:360px;overflow:auto}
 .post .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .copy{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:4px 12px;border-radius:999px;cursor:pointer;margin-top:8px}
+.task{display:flex;gap:4px;align-items:flex-start}
+.task label.chk{flex:1;min-width:0}
+.task .ic{font:inherit;font-size:14px;line-height:1;width:32px;height:32px;flex:0 0 32px;border:0;background:none;color:var(--muted);border-radius:8px;cursor:pointer;margin-top:2px}
+.task .ic:hover{background:var(--accent-soft);color:var(--accent)}
+.task .tag{font-size:11px;color:var(--gold);font-weight:600;margin-left:6px}
+.edit{display:grid;gap:8px;padding:8px;border:1px solid var(--accent);border-radius:10px;background:var(--bg)}
+.edit input[type=text],.addf input,.edit select,.addf select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:0}
+.edit .row,.addf{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.addf input{flex:1 1 120px;width:0}
+.btn{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:999px;cursor:pointer}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn.del{color:#B3412F;margin-left:auto}
+.days{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.day.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.day .dh{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}
+.empty{font-size:13px;color:var(--muted);padding:4px}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 @media (max-width:520px){.month{grid-template-columns:1fr;gap:2px}.step:nth-child(n){margin-left:0}}
 </style>
@@ -171,8 +187,15 @@ th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute
     </div>
     <div class="bar"><i id="wk-bar"></i></div>
     <div class="grid">
-      <div class="card"><h3>Задачи недели</h3><ul class="checks" id="wk-proj"></ul></div>
+      <div class="card"><h3>Задачи на всю неделю</h3><ul class="checks" id="wk-proj"></ul>
+        <form class="addf" data-day="-1"><input type="text" placeholder="Новая задача на неделю" aria-label="Новая задача на неделю"><select aria-label="День"></select><button class="btn pri" type="submit">Добавить</button></form>
+      </div>
       <div class="card"><h3>Публикации</h3><div id="wk-pub" class="pubs"></div></div>
+    </div>
+    <div class="block">
+      <h3>По дням</h3>
+      <p class="small">Задачи можно добавлять, переименовывать, переносить на другой день или удалять (✎).</p>
+      <div class="days" id="wk-days"></div>
     </div>
     <div class="block">
       <h3>Все недели</h3>
@@ -543,13 +566,13 @@ const PROJ = {
   9:["Встреча с Freedom: пилот и знакомство с семьями","Разнести колонку Forbes по каналам, если вышла","Подвести итоги двух месяцев: что сработало"]
 };
 const WEEKS = [];
-for (let n=1; n<=9; n++){
+for (let n=1; n<=51; n++){
   const mon = new Date(W0); mon.setDate(W0.getDate()+(n-1)*7);
   const sun = new Date(mon); sun.setDate(mon.getDate()+6);
   const dates = mon.getMonth()===sun.getMonth()
     ? mon.getDate()+"–"+sun.getDate()+" "+MONTHS_GEN[sun.getMonth()]
     : mon.getDate()+" "+MONTHS_GEN[mon.getMonth()]+" – "+sun.getDate()+" "+MONTHS_GEN[sun.getMonth()];
-  const proj = PROJ[n].map((t,i) => ["w"+n+"p"+i, t]);
+  const proj = (PROJ[n]||[]).map((t,i) => ["w"+n+"p"+i, t]);
   const pubs = [];
   if (n===1){
     pubs.push(["Instagram Tumar", [["w1ig1","Пост 1"],["w1ig2","Пост 2"],["w1ig3","Пост 3"]]]);
@@ -568,12 +591,74 @@ for (let n=1; n<=9; n++){
   if (n>=2) pubs.push(["Итоги недели", [["w"+n+"m","Пт · Записать цифры: заявки, подписчики, охваты"]]]);
   WEEKS.push({n, mon, sun, dates, proj, pubs});
 }
-function weekIds(w){ const ids = w.proj.map(x=>x[0]); w.pubs.forEach(([,items]) => items.forEach(x=>ids.push(x[0]))); return ids; }
+function weekIds(w){ const ids = weekTasks(w).map(x=>x.id); w.pubs.forEach(([,items]) => items.forEach(x=>ids.push(x[0]))); return ids; }
 function currentWeekIdx(){ const t = new Date(); t.setHours(12);
   const i = WEEKS.findIndex(w => t >= w.mon && t <= new Date(w.sun.getFullYear(), w.sun.getMonth(), w.sun.getDate(), 23, 59));
   return i>=0 ? i : (t < WEEKS[0].mon ? 0 : WEEKS.length-1); }
 let wkIdx = currentWeekIdx();
 try { const s = parseInt(sessionStorage.getItem("tumar-wk"),10); if (s>=0 && s<WEEKS.length) wkIdx = s; } catch(e){}
+
+// ===== Свои задачи и правки =====
+const DAYS = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+const DAYS_FULL = ["Понедельник","Вторник","Среда","Четверг","Пятница","Суббота","Воскресенье"];
+const TASKS = new Map(); // id -> {w,d,t,custom,hidden,at}
+let editing = null;
+function loadTasksLocal(){ try { Object.entries(JSON.parse(localStorage.getItem("tumar-tasks")||"{}")).forEach(([k,v])=>TASKS.set(k,v)); } catch(e){} }
+function saveTasksLocal(){ try { localStorage.setItem("tumar-tasks", JSON.stringify(Object.fromEntries(TASKS))); } catch(e){} }
+async function putTask(id, obj){
+  if (obj) TASKS.set(id, obj); else TASKS.delete(id);
+  renderWeek();
+  if (mode === "db" && db){
+    try { const ref = db.collection("tasks").doc(id); if (obj) await ref.set(obj); else await ref.delete(); }
+    catch(e){ $("#sync").textContent = "Не удалось сохранить задачу. Проверьте интернет и попробуйте ещё раз."; }
+  } else saveTasksLocal();
+}
+function weekTasks(w){
+  const out = [];
+  w.proj.forEach(([id,t],i) => { const o = TASKS.get(id) || {}; if (o.hidden) return;
+    out.push({id, t:o.t||t, d:(o.d==null?-1:o.d), custom:false, at:i}); });
+  TASKS.forEach((o,id) => { if (o.custom && o.w===w.n && !o.hidden) out.push({id, t:o.t, d:(o.d==null?-1:o.d), custom:true, at:1e6+(o.at||0)}); });
+  return out.sort((a,b)=>a.at-b.at);
+}
+function dayOptions(sel, cur, w){
+  sel.replaceChildren();
+  const o0 = el("option",null,"Вся неделя"); o0.value="-1"; sel.append(o0);
+  DAYS.forEach((d,i) => { const dt = new Date(w.mon); dt.setDate(w.mon.getDate()+i);
+    const o = el("option",null,d+", "+dt.getDate()+" "+MONTHS_GEN[dt.getMonth()]); o.value=String(i); sel.append(o); });
+  sel.value = String(cur);
+}
+function taskRow(task, w){
+  const li = el("li");
+  if (editing === task.id){
+    const f = el("form","edit"); const inp = document.createElement("input"); inp.type="text"; inp.value=task.t; inp.setAttribute("aria-label","Текст задачи");
+    const row = el("div","row"); const sel = document.createElement("select"); sel.setAttribute("aria-label","День"); dayOptions(sel, task.d, w);
+    const ok = el("button","btn pri","Сохранить"); ok.type="submit";
+    const no = el("button","btn","Отмена"); no.type="button"; no.addEventListener("click",()=>{ editing=null; renderWeek(); });
+    const del = el("button","btn del","Удалить"); del.type="button";
+    del.addEventListener("click",()=>{ editing=null; done.delete(task.id); saveDoneQuiet(task.id);
+      putTask(task.id, task.custom ? null : {...(TASKS.get(task.id)||{}), hidden:true}); });
+    row.append(sel, ok, no, del); f.append(inp, row);
+    f.addEventListener("submit", ev => { ev.preventDefault(); const t = inp.value.trim(); if (!t) return; editing=null;
+      const d = parseInt(sel.value,10);
+      putTask(task.id, task.custom ? {...TASKS.get(task.id), t, d} : {...(TASKS.get(task.id)||{}), t, d}); });
+    f.addEventListener("keydown", ev => { if (ev.key==="Escape"){ editing=null; renderWeek(); } });
+    li.append(f); setTimeout(()=>inp.focus(),0); return li;
+  }
+  const wrap = el("div","task"); const c = checkItem(task.id, task.t).firstChild;
+  if (task.custom) c.lastChild.append(el("span","tag","моя"));
+  const b = el("button","ic","✎"); b.type="button"; b.setAttribute("aria-label","Изменить задачу");
+  b.addEventListener("click",()=>{ editing=task.id; renderWeek(); });
+  wrap.append(c,b); li.append(wrap); return li;
+}
+async function saveDoneQuiet(id){ if (mode==="db" && db){ try { await db.collection("done").doc(id).delete(); } catch(e){} } else saveLocal(); }
+document.addEventListener("submit", ev => {
+  const f = ev.target; if (!f.matches || !f.matches("form.addf")) return; ev.preventDefault();
+  const inp = f.querySelector("input"), sel = f.querySelector("select"); const t = inp.value.trim(); if (!t) return;
+  const d = sel ? parseInt(sel.value,10) : parseInt(f.dataset.day,10);
+  const id = "u"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  inp.value = ""; putTask(id, {w:WEEKS[wkIdx].n, d, t, custom:true, at:Date.now()});
+  setTimeout(()=>{ const again = document.querySelector('form.addf[data-day="'+f.dataset.day+'"] input'); if (again) again.focus(); },0);
+});
 
 function renderWeek(){
   if (!WEEKS.length) return;
@@ -583,13 +668,26 @@ function renderWeek(){
   const m = DATA.months.find(([y,mo]) => y===w.mon.getFullYear() && mo===w.mon.getMonth());
   $("#wk-theme").textContent = m ? "Тема месяца: "+m[3] : "";
   $("#wk-prev").disabled = wkIdx===0; $("#wk-next").disabled = wkIdx===WEEKS.length-1;
-  const pu = $("#wk-proj"); pu.replaceChildren(); w.proj.forEach(([id,t]) => pu.append(checkItem(id,t)));
+  const tasks = weekTasks(w);
+  const pu = $("#wk-proj"); pu.replaceChildren(); const wt = tasks.filter(x=>x.d<0);
+  if (!wt.length) pu.append(el("li","empty","Задач на всю неделю нет."));
+  wt.forEach(x => pu.append(taskRow(x,w)));
+  const asel = document.querySelector('form.addf[data-day="-1"] select'); const keep = asel.value; dayOptions(asel, keep===""? -1 : parseInt(keep,10), w);
+  const dz = $("#wk-days"); dz.replaceChildren(); const today = new Date();
+  DAYS_FULL.forEach((dn,i) => { const dt = new Date(w.mon); dt.setDate(w.mon.getDate()+i);
+    const c = el("div","card day"); if (dt.toDateString()===today.toDateString()) c.classList.add("today");
+    const dh = el("div","dh"); dh.append(el("h3",null,dn), el("span","small",dt.getDate()+" "+MONTHS_GEN[dt.getMonth()]+(c.classList.contains("today")?" · сегодня":"")));
+    const ul = el("ul","checks"); const list = tasks.filter(x=>x.d===i); list.forEach(x => ul.append(taskRow(x,w)));
+    if (!list.length) ul.append(el("li","empty","Пока пусто"));
+    const f = el("form","addf"); f.dataset.day = String(i); const inp = document.createElement("input"); inp.type="text"; inp.placeholder="Добавить задачу"; inp.setAttribute("aria-label","Новая задача на "+dn);
+    const ab = el("button","btn","+"); ab.type="submit"; ab.setAttribute("aria-label","Добавить"); f.append(inp, ab);
+    c.append(dh, ul, f); dz.append(c); });
   const pb = $("#wk-pub"); pb.replaceChildren();
   if (!w.pubs.length) pb.append(el("p","small","На этой неделе готовим каналы. Публикации начинаются со следующей недели."));
   w.pubs.forEach(([ch,items]) => { pb.append(el("div","ch",ch)); const ul = el("ul","checks"); items.forEach(([id,t]) => ul.append(checkItem(id,t))); pb.append(ul); });
   const ids = weekIds(w), n = ids.filter(id=>done.has(id)).length;
   $("#wk-count").textContent = "Сделано "+n+" из "+ids.length;
-  $("#wk-bar").style.width = (100*n/ids.length)+"%";
+  $("#wk-bar").style.width = (ids.length? 100*n/ids.length : 0)+"%";
   document.querySelectorAll("#v-week input[data-id]").forEach(i => { i.checked = done.has(i.dataset.id); });
   const st = $("#wk-strip"); st.replaceChildren();
   WEEKS.forEach((x,i) => { const ids2 = weekIds(x), k = ids2.filter(id=>done.has(id)).length;
@@ -598,9 +696,9 @@ function renderWeek(){
     b.addEventListener("click", () => setWeek(i)); st.append(b); });
   const cw = WEEKS[cur], cids = weekIds(cw), cn = cids.filter(id=>done.has(id)).length;
   $("#ov-week").textContent = cw.dates+": сделано "+cn+" из "+cids.length;
-  $("#ov-week-bar").style.width = (100*cn/cids.length)+"%";
+  $("#ov-week-bar").style.width = (cids.length? 100*cn/cids.length : 0)+"%";
 }
-function setWeek(i){ wkIdx = Math.max(0, Math.min(WEEKS.length-1, i)); try { sessionStorage.setItem("tumar-wk", String(wkIdx)); } catch(e){} renderWeek(); }
+function setWeek(i){ editing = null; wkIdx = Math.max(0, Math.min(WEEKS.length-1, i)); try { sessionStorage.setItem("tumar-wk", String(wkIdx)); } catch(e){} renderWeek(); }
 $("#wk-prev").addEventListener("click", () => setWeek(wkIdx-1));
 $("#wk-next").addEventListener("click", () => setWeek(wkIdx+1));
 $("#wk-today").addEventListener("click", () => setWeek(currentWeekIdx()));
@@ -617,8 +715,11 @@ fetch("tg-posts.json").then(r => r.json()).then(j => { TG = Array.isArray(j) ? j
 
 (async () => {
   try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch(e){ db = null; }
-  if (!db){ mode = "local"; loadLocal(); refresh(); $("#sync").textContent = "Отметки сохраняются только на этом устройстве."; return; }
+  if (!db){ mode = "local"; loadLocal(); loadTasksLocal(); refresh(); $("#sync").textContent = "Отметки сохраняются только на этом устройстве."; return; }
   mode = "db";
+  db.collection("tasks").onSnapshot(snap => {
+    TASKS.clear(); snap.docs.forEach(d => { if (d.exists) TASKS.set(d.id, d.data()); }); renderWeek();
+  }, () => {});
   db.collection("done").onSnapshot(snap => {
     done.clear(); snap.docs.forEach(d => { if (d.exists) done.add(d.id); });
     refresh(); $("#sync").textContent = "Отметки синхронизируются между iPhone и Mac.";
